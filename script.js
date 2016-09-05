@@ -40,7 +40,7 @@ window.onload = function(){
 		var table = document.getElementById('address-book');
 		var chekbox = document.getElementsByName('checkboxAddressList');
 		addressBookData = JSON.parse(localStorage['addbook']);
-		for(var n in chekbox){
+		for(var n = chekbox.length - 1; n >= 0; n--){
 			if(null != chekbox[n] && true == chekbox[n].checked) {
 				table.deleteRow(n);
 				addressBookData.splice(n,1);
