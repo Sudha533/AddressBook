@@ -34,25 +34,22 @@ window.onload = function(){
 	}
 	
 function createRow(tr, n, addressBookData){
-		var td=document.createElement("td");
-		var td1=document.createElement("td");
+		var td1 = document.createElement("input");
+        td1.type = 'checkbox';
 		var td2=document.createElement("td");
-		var td3=document.createElement("button");
-		td.innerHTML = addressBookData[n].name;
-		td1.innerHTML = addressBookData[n].phone;
-		td2.innerHTML = addressBookData[n].email;
-		td3.innerHTML = "Delete";
+		var td3=document.createElement("td");
+		var td4=document.createElement("td");
+		td2.innerHTML = addressBookData[n].name;
+		td3.innerHTML = addressBookData[n].phone;
+		td4.innerHTML = addressBookData[n].email;
 		
-		tr.appendChild(td);
+		
 		tr.appendChild(td1);
 		tr.appendChild(td2);
 		tr.appendChild(td3);
+		tr.appendChild(td4);
 		document.getElementById('address-book').appendChild(tr);
-		td3.addEventListener("click", function(){
-			document.getElementById('address-book').deleteRow(this);
-			addressBookData.splice(this);
-			localStorage['addbook'] = JSON.stringify(addressBookData);
-		});	
+			
 	}
 	
 	function showAddressBook(){
