@@ -15,7 +15,7 @@
 		<div class="address-form">
 			<div class="form-group">
 			<label for="name">Name</label>
-			<input type="text" name="name" id="name"/>
+			<input type="text" name="name" id="name" />
 			</div>
 			
 			
@@ -27,7 +27,7 @@
 			
 			<div class="form-group">
 			<label for="email">Email</label>
-			<input type="text" name="email" id="email"/>
+			<input type="text" name="email" id="email" />
 			</div>
 			
 			<div class="form-group">
@@ -38,7 +38,23 @@
 		</div>
 		<div class="address-book">
 		    <button id="delete">Delete</button>
-			<button id="sort">Sort</button>
+			<div>
+				<button id="sort">Sort</button>
+				<select id="sortOrder">
+					<option value="0" selected="1">Ascending</option>
+					<option value="1">Descending</option>
+				</select>
+				<select id="sortField">
+					<option value="0" selected="1">Name</option>
+					<option value="1">Phone Number</option>
+					<option value="2">Email</option>
+				</select>
+				<select id="sortCase">
+					<option value="0" selected="1">Case Sensitive</option>
+					<option value="1">Case Insensitive</option>
+				</select>
+			
+			</div>
 			<table id="address-book">
 			</table>
 		</div>

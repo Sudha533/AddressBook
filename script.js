@@ -5,6 +5,7 @@ window.onload = function(){
 	var resetBtn = document.getElementById('reset');
 	var addBtn = document.getElementById('add');
 	var deleteBtn = document.getElementById('delete');
+	var sortBtn = document.getElementById('sort');
 	var addressBook = document.querySelector('.address-book');
 	var addressForm = document.querySelector('.address-form');
 	var addressBookData=[];
@@ -25,9 +26,13 @@ window.onload = function(){
 	
 	addBtn.addEventListener("click", addToBook);
 	deleteBtn.addEventListener("click", deleteFromBook);
-	resetBtn.addEventListener("click", resetFields)
+	resetBtn.addEventListener("click", resetFields);
+	sortBtn.addEventListener("click", sortContactList);
 	
 	function addToBook(){
+		checkName();
+		checkPhone();
+		checkEmail();
 		if(name.value!='' && phone.value!='' && email.value!=''){
 			var obj = new jsonStructure(name.value,phone.value,email.value)
 		    addressBookData.push(obj);
@@ -49,6 +54,82 @@ window.onload = function(){
 		localStorage['addbook'] = JSON.stringify(addressBookData);
 	}
 	
+	function sortContactList(){
+		var sortOrder = document.getElementById('sortOrder');
+		var sortOrderValue = sortOrder.options[sortOrder.selectedIndex].value;
+		var sortField = document.getElementById('sortField');
+		var sortFieldValue = sortField.options[sortField.selectedIndex].value;
+		var sortCase = document.getElementById('sortCase');
+		var sortCaseValue = sortCase.options[sortCase.selectedIndex].value;
+		addressBookData = JSON.parse(localStorage['addbook']);	
+		
+		if(sortFieldValue == 0 && sortCaseValue == 0){
+			addressBookData.sort(caseSensitiveSortBy("name", sortOrderValue));
+		}else if(sortFieldValue == 0 && sortCaseValue == 1 ){
+			addressBookData.sort(caseInsensitiveSortBy("name", sortOrderValue));
+		}else if(sortFieldValue == 1){
+			addressBookData.sort(caseSensitiveSortBy("phone", sortOrderValue));
+		}else if(sortFieldValue == 2 && sortCaseValue == 0){
+			addressBookData.sort(caseSensitiveSortBy("email", sortOrderValue));
+		}else if(sortFieldValue == 2 && sortCaseValue == 1){
+			addressBookData.sort(caseInsensitivecaseSensitiveSortBy("email", sortOrderValue));
+		}
+		
+		localStorage['addbook'] = JSON.stringify(addressBookData);
+		clearTableRows();
+		showAddressBook();
+	}
+	
+	function clearTableRows(){
+		var table = document.getElementById('address-book');
+		while(table.rows.length > 0) {
+			table.deleteRow(0);
+		}
+	}
+	function caseSensitiveSortBy(prop, sortOrderValue){
+		if(sortOrderValue == 0){
+			return function(a,b){
+				if( a[prop] > b[prop]){
+					return 1;
+				}else if( a[prop] < b[prop] ){
+					return -1;
+				}
+			  return 0;
+			}
+		}else{
+			return function(b,a){
+				if( a[prop] > b[prop]){
+					return 1;
+				}else if( a[prop] < b[prop] ){
+					return -1;
+				}
+			  return 0;
+			}
+	    }
+	}
+	
+	function caseInsensitiveSortBy(prop, sortOrderValue){
+	    if(sortOrderValue == 0){
+			return function(a,b){
+				if( a[prop].toLowerCase() > b[prop].toLowerCase()){
+					return 1;
+				}else if( a[prop].toLowerCase() < b[prop].toLowerCase() ){
+					return -1;
+				}
+			  return 0;
+			}
+		}else{
+			return function(b,a){
+				if( a[prop].toLowerCase() > b[prop].toLowerCase()){
+					return 1;
+				}else if( a[prop].toLowerCase() < b[prop].toLowerCase() ){
+					return -1;
+				}
+			  return 0;
+			}
+	    }
+	}
+
 	function jsonStructure(name,phone,email){
 		this.name = name;
 		this.phone = phone;
@@ -91,4 +172,22 @@ window.onload = function(){
 		phone.value = "";
 	    email.value = "";
 	}
+	function checkName(){
+		if(name.value == null && name.value == ''){
+			alert("Name required");
+			name.style.borderColor = "red";
+		}
+	}
+	function checkPhone(){
+		if(phone.value == null && phone.value == ''){
+			phone.style.borderColor = "red";
+		}
+	}
+	function checkEmail(){
+		if(email.value == null && email.value == ''){
+			phone.style.borderColor = "red";
+		}
+	}
+		
+		
 }
