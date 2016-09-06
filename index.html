@@ -1,44 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
 	<meta charset="UTF-8">
-	<title>Address Book</title>
+	
+	<!-- Stylesheet
+	============================================= -->
 	<link rel="stylesheet" href="style.css">
+	
+	<!-- Script
+	============================================= -->
 	<script src="script.js"></script>
+	
+	<!-- Document Title
+	============================================= -->
+	<title>Address Book</title>
 </head>
 <body>
+
+	<!-- Container
+	============================================= -->
 	<div class="container">
+	
+	    <!-- Heading
+	    ============================================= -->
 		<div class="heading">
 		<h1>Address Book</h1>
 		</div>
-	
+	    <!-- Form Fields
+	     ============================================= -->
 		<div class="address-form">
 			<div class="form-group">
 			<label for="name">Name</label>
-			<input type="text" name="name" id="name" />
+			<input type="text" class="error" name="name" id="name" />
 			</div>
 			
 			
 			<div class="form-group">
 			<label for="phone">Phone Number</label>
-			<input type="text" name="phone" id="phone" />
+			<input type="text" class="error" name="phone" id="phone" />
 			</div>
 			
 			
 			<div class="form-group">
 			<label for="email">Email</label>
-			<input type="text" name="email" id="email" />
+			<input type="text"  class="error" name="email" id="email" />
 			</div>
+			
 			
 			<div class="form-group">
 			<button id="add">Add</button>
 			<button id="reset">Reset</button>
 			</div>
 			
-		</div>
+		</div><!--Form Fields End-->
+		
+		
 		<div class="address-book">
-		    <button id="delete">Delete</button>
-			<div>
+		        <button id="delete">Delete</button>
+			
 				<button id="sort">Sort</button>
 				<select id="sortOrder">
 					<option value="0" selected="1">Ascending</option>
@@ -53,15 +73,16 @@
 					<option value="0" selected="1">Case Sensitive</option>
 					<option value="1">Case Insensitive</option>
 				</select>
+			<br><br>
 			
-			</div>
+			<!-- Table
+	         ============================================= -->
 			<table id="address-book">
-			</table>
+			</table><!--table end-->
 		</div>
 	
 	
-	</div>
-	
+	</div><!--Container End-->
 	
 	
 </body>

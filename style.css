@@ -1,6 +1,6 @@
 .container{
 	margin-top:5%;
-	width: 45%;
+	width: 75%;
 	margin:auto;
 	position:relative;
 	border:2px solid #C0C0C0;
@@ -62,12 +62,13 @@
     color: #FFFFFF;
     width: 20%;
     text-align: center;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s; 
     transition-duration: 0.4s;
     text-decoration: none;
     overflow: hidden;
     cursor: pointer;
 }
+
 .form-group button:hover{
 	color: #9ABAB2;
 	background-color: #fff;
@@ -77,6 +78,25 @@
 	padding:10px;
 	text-align:center;
 }
+.address-book button, select{
+	background-color: #9ABAB2; 
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+	width:15%;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+}
+
+.address-book button:hover, select.hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.2),0 17px 50px 0 rgba(0,0,0,0.1);
+}
 table, td, th {
     border: 1px solid #ccc;
 	padding:2px;
@@ -85,7 +105,9 @@ table, td, th {
 table {
     border-collapse: collapse;
     width: 100%;
+	text-align:center;
 }
+
 
 
 

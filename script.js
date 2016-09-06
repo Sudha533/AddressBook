@@ -1,21 +1,30 @@
-window.onload = function(){
+/* ================================ */
+/* ADDRESS BOOK IMPLEMENTATION      */
+/* Author: Sudha Subramaniam        */
+/* E-Mail: s.sudhacse08@gmail.com   */
+/* ================================ */
+
+window.onload = function(){	
+	/* ===== Form Fields ===== */
 	var name = document.getElementById('name');
 	var phone = document.getElementById('phone');
 	var email = document.getElementById('email');
+	/* ===== Buttons ===== */
 	var resetBtn = document.getElementById('reset');
 	var addBtn = document.getElementById('add');
 	var deleteBtn = document.getElementById('delete');
 	var sortBtn = document.getElementById('sort');
+	/* ===== Table and Div ===== */
 	var addressBook = document.querySelector('.address-book');
 	var addressForm = document.querySelector('.address-form');
 	var addressBookData=[];
 		
 	showAddressBook();
-	
+	/* ===== showing the address book ===== */
 	function showAddressBook(){
 		if(localStorage['addbook'] === undefined){
 			localStorage['addbook'] = '';
-		} else {
+		}else{
 			addressBookData = JSON.parse(localStorage['addbook']);
 			for(var n in addressBookData){
 				var tr = document.createElement("tr");
@@ -23,24 +32,27 @@ window.onload = function(){
 			}
 		}
 	}
-	
+	/* ===== Button click events ===== */
 	addBtn.addEventListener("click", addToBook);
 	deleteBtn.addEventListener("click", deleteFromBook);
 	resetBtn.addEventListener("click", resetFields);
 	sortBtn.addEventListener("click", sortContactList);
-	
+	/* ===== Adding value to the address book ===== */
 	function addToBook(){
-		checkName();
-		checkPhone();
-		checkEmail();
-		if(name.value!='' && phone.value!='' && email.value!=''){
+		var errorStringName = checkName();
+		var errorStringPhone = checkPhone();
+		var errorStringEmail = checkEmail();
+		if(errorStringName == '' && errorStringPhone == '' && errorStringEmail == ''){
 			var obj = new jsonStructure(name.value,phone.value,email.value)
 		    addressBookData.push(obj);
 		    localStorage['addbook'] = JSON.stringify(addressBookData);
             addNewlyAddedAddress();
+		}else{
+			var alertString = 'Check the following -\n' + errorStringName + '\n' + errorStringPhone + '\n' + errorStringEmail;
+			alert(alertString);
 		}
 	}
-	
+	/* ===== Deleting the data from the address book ===== */
 	function deleteFromBook(){
 		var table = document.getElementById('address-book');
 		var chekbox = document.getElementsByName('checkboxAddressList');
@@ -53,7 +65,7 @@ window.onload = function(){
 		}
 		localStorage['addbook'] = JSON.stringify(addressBookData);
 	}
-	
+	/* ===== sorting the contact list ===== */
 	function sortContactList(){
 		var sortOrder = document.getElementById('sortOrder');
 		var sortOrderValue = sortOrder.options[sortOrder.selectedIndex].value;
@@ -86,6 +98,7 @@ window.onload = function(){
 			table.deleteRow(0);
 		}
 	}
+	
 	function caseSensitiveSortBy(prop, sortOrderValue){
 		if(sortOrderValue == 0){
 			return function(a,b){
@@ -135,11 +148,11 @@ window.onload = function(){
 		this.phone = phone;
 		this.email = email;
 	}
-	
+	/* =====Adding new value to the address book ===== */
 	function addNewlyAddedAddress(){
 		if(localStorage['addbook'] === undefined){
 			localStorage['addbook'] = '';
-		} else {
+		}else{
 			addressBookData = JSON.parse(localStorage['addbook']);
 			var n = addressBookData.length - 1;
 			var tr=document.createElement("tr");
@@ -158,13 +171,11 @@ window.onload = function(){
 		td3.innerHTML = addressBookData[n].phone;
 		td4.innerHTML = addressBookData[n].email;
 		
-		
 		tr.appendChild(td1);
 		tr.appendChild(td2);
 		tr.appendChild(td3);
 		tr.appendChild(td4);
 		document.getElementById('address-book').appendChild(tr);
-			
 	}
 	
 	function resetFields(){
@@ -172,22 +183,52 @@ window.onload = function(){
 		phone.value = "";
 	    email.value = "";
 	}
+	/* ===== Validationg the form fields ===== */
 	function checkName(){
-		if(name.value == null && name.value == ''){
-			alert("Name required");
+		var returnValue = 'Please enter a valid name.  It can only contain alphabets';
+		if(name.value == null || name.value == ''){
 			name.style.borderColor = "red";
+		}else{
+			var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+			if(name.value.match(letters)){
+				name.style.borderColor = "blue";
+				returnValue = '';	
+			}else{
+				name.style.borderColor = "red";
+			}
 		}
+		return returnValue;
 	}
+	
 	function checkPhone(){
-		if(phone.value == null && phone.value == ''){
+		var returnValue = 'Please enter a valid phone number.  It has to contain only numbers and be of the following format xxxxxxxxxx';
+		if(phone.value == null || phone.value == ''){
 			phone.style.borderColor = "red";
+		}else{
+			var phoneno = /^\d{10}$/; 
+			if(phone.value.match(phoneno)){
+				phone.style.borderColor = "blue";
+				returnValue = '';
+			}else{
+				name.style.borderColor = "red";
+			}
 		}
+		return returnValue;
 	}
+	
 	function checkEmail(){
-		if(email.value == null && email.value == ''){
-			phone.style.borderColor = "red";
+		var returnValue = 'Please enter a valid e-mail.  It has to be of the following format and be of the following format mail@domainname.com';
+		if(email.value == null || email.value == ''){
+			 email.style.borderColor = "red";	
+		}else{
+			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+            if(email.value.match(mailformat)){  
+				email.style.borderColor = "blue";
+				returnValue = '';
+			}else{
+				name.style.borderColor = "red";
+			}
 		}
+		return returnValue;
 	}
-		
-		
 }
